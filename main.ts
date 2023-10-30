@@ -20,10 +20,18 @@ export default class EditorAutofocus extends Plugin {
 	      this.app.workspace.on('file-open', async (file) => {
 	      	let editor = this.getEditor();
 	      	if (editor) {
+	      		// if we have more than two lines, it's probably not a new file. just bail.
+	      		if (editor.lineCount() > 2) {
+	      			return
+	      		}
+
+	      		// focus on the editor, skip the tab title bar
 	        	editor.focus();
 
+	        	// wait a while, so obsidian filename heading sync can do its thing
 	      		await this.delay(100);
 
+	      		// select the heading inserted by filename heading sync
 	        	let lastCh = editor.getLine(0).length;
 	        	if (lastCh > 1) {
 		        	editor.setSelection(
