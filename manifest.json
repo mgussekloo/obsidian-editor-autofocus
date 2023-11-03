@@ -3,7 +3,7 @@
 	"name": "Editor Autofocus",
 	"version": "1.0.0",
 	"minAppVersion": "0.15.0",
-	"description": "Attempts to autofocus the editor window when opening a new file.",
+	"description": "Autofocus the editor when opening a new file.",
 	"author": "Mgussekloo",
 	"authorUrl": "https://github.com/mgussekloo",
 	"fundingUrl": "https://github.com/mgussekloo",
