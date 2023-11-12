@@ -1,20 +1,7 @@
 import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
 
-// Remember to rename these classes and interfaces!
-
-interface EditorAutofocusSettings {
-	mySetting: string;
-}
-
-const DEFAULT_SETTINGS: EditorAutofocusSettings = {
-	mySetting: 'default'
-}
-
 export default class EditorAutofocus extends Plugin {
-	settings: EditorAutofocusSettings;
-
 	async onload() {
-		await this.loadSettings();
 
 	 	this.registerEvent(
 	      this.app.workspace.on('file-open', async (file) => {
@@ -30,7 +17,7 @@ export default class EditorAutofocus extends Plugin {
 	        	editor.focus();
 
 	        	// wait a while, so obsidian filename heading sync can do its thing
-	      		await this.delay(100);
+	      		await sleep(100);
 
 	      		// see if the first character of the first line is a #
 	      		let firstLine = editor.getLine(0);
@@ -59,19 +46,8 @@ export default class EditorAutofocus extends Plugin {
 
 	}
 
-	async loadSettings() {
-		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
-	}
-
-	async saveSettings() {
-		await this.saveData(this.settings);
-	}
-
 	private getEditor(): Editor | undefined {
 		return this.app.workspace.getActiveViewOfType(MarkdownView)?.editor;
 	}
 
-	private delay(ms: number): Promise<void> {
-	    return new Promise((resolve) => setTimeout(resolve, ms));
-	}
 }
